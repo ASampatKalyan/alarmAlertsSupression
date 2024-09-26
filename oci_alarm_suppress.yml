@@ -8,30 +8,41 @@
 #
 #
 #——————————————————————————————————————————————————————————————————————————————————————————————————————————————————
-# This script gets the alarm details and match with the host or ocid and will suppress them
+# This script gets the alarm details and matches with the host or ocid and will suppress them
 - name: Get Alarm Details based on the host display name or OCID
   block:
-      #==========================================================================================
-      - name: List alarms for each compartment based on the host compartment
-        oci_monitoring_alarm_facts:
-           compartment_id: "{{ instance_compartment }}"
-           lifecycle_state: ACTIVE
-        register: result
+    #==========================================================================================
+    - name: List alarms for each compartment based on the host compartment
+      oci_monitoring_alarm_facts:
+        compartment_id: "{{ instance_compartment }}"
+        lifecycle_state: ACTIVE
+      register: result
 
-      - set_fact:
-            alarm_results: "{{ result.alarms }}"
+    - set_fact:
+        alarm_results: "{{ result.alarms }}"
 
-      - debug:
-          msg: instance name "{{ instance_name }}"
+    - debug:
+        msg: instance name "{{ instance_name }}"
 
-      - name: Extract Alarm IDs
-        set_fact:
-           alarm_ids: "{{ alarm_ids + [result_item.id] }}"
-        loop: "{{ alarm_results }}"
-        when: alarm_results|length > 0 and ( ("resourceDisplayName = \"" + instance_name + "\"" ) in result_item.query or instance_id in result_item.query )
-        loop_control:
-          loop_var: result_item
+    - name: Extract Alarm IDs
+      set_fact:
+        alarm_ids: "{{ alarm_ids + [result_item.id] }}"
+      loop: "{{ alarm_results }}"
+      when: alarm_results | length > 0 and (("resourceDisplayName = \"" + instance_name + "\"") in result_item.query or instance_id in result_item.query)
+      loop_control:
+        loop_var: result_item
+
+    - name: Create alarm_suppression
+      oci_monitoring_alarm_suppression:
+        # required
+        alarm_suppression_target:
+          # required
+          target_type: ALARM
+          alarm_id: "ocid1.alarm.oc1..xxxxxxEXAMPLExxxxxx"
+        display_name: display_name_example
+        dimensions: null
+        time_suppress_from: time_suppress_from_example
 
   rescue:
-     - fail:
+    - fail:
         msg: "{{ ansible_failed_task }} {{ ansible_failed_result }}"
