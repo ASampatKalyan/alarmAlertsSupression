@@ -83,18 +83,21 @@
         - fail:
             msg: "{{ ansible_failed_task }} {{ ansible_failed_result }}"
     
-    - name: Create alarm_suppression
-      oracle.oci.oci_monitoring_alarm_suppression:
-        alarm_suppression_target:
-            target_type: ALARM
-            alarm_id: "{{ alarm_item }}"
-        display_name: display_name_example
-        dimensions:
-          resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
-        time_suppress_from: "{{ start_time }}"
-        time_suppress_until: "{{ end_time }}"
-        description: "{{ outage_description }}"
-      with_items: "{{ alarm_ids }}"
-      loop_control:
-        loop_var: alarm_item
-      when: add_suppression
+    # - name: Create alarm_suppression
+    #   oci_monitoring_alarm_suppression:
+    #     alarm_suppression_target:
+    #         target_type: ALARM
+    #         alarm_id: "{{ alarm_item }}"
+    #     display_name: display_name_example
+    #     dimensions:
+    #       resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
+    #     time_suppress_from: "{{ start_time }}"
+    #     time_suppress_until: "{{ end_time }}"
+    #     description: "{{ outage_description }}"
+    #   with_items: "{{ alarm_ids }}"
+    #   loop_control:
+    #     loop_var: alarm_item
+    #   when: add_suppression
+    - name: Check version of community.general
+      ansible.builtin.debug:
+        msg: "community.general version {{ lookup('community.general.collection_version', 'oracle.oci') }}"
