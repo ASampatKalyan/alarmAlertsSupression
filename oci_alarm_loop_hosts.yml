@@ -85,7 +85,7 @@
     
     - name: Create alarm_suppression
       block:
-        - name: Remove Suppression from eligible Alarms
+        - name: alarm_suppression
           oci_monitoring_alarm_suppression:
             alarm_suppression_target:
                 target_type: ALARM
