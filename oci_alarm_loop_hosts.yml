@@ -83,10 +83,6 @@
         - fail:
             msg: "{{ ansible_failed_task }} {{ ansible_failed_result }}"
 
-    - name: Install bottle python package
-      ansible.builtin.pip:
-        name: OCI
-
     - name: Create alarm_suppression
       oci_monitoring_alarm_suppression:
         alarm_suppression_target:
