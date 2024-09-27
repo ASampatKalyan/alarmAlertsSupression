@@ -44,7 +44,7 @@
             instance_name: "{{ hostvars[target].display_name }}"
             instance_id: "{{ hostvars[target].id }}"
             instance_compartment: "{{ hostvars[target].compartment_id }}"
-      when: "target in hostvars"
+      when: target in hostvars
 
     - name: Print the list of eligible alarm ids
       debug: var=alarm_ids
