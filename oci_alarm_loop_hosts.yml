@@ -82,12 +82,10 @@
       rescue:
         - fail:
             msg: "{{ ansible_failed_task }} {{ ansible_failed_result }}"
-            
-    - name: Install OCI
-      command: pip3 install oci
-      environment:
-        PATH: "{{ ansible_env.PATH }}"
-      ignore_errors: true
+
+    - name: Install bottle python package
+      ansible.builtin.pip:
+        name: OCI
 
     - name: Create alarm_suppression
       oci_monitoring_alarm_suppression:
