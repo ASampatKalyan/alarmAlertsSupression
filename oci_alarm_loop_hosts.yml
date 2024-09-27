@@ -1,6 +1,6 @@
 - name: Alarm Suppress based on Host or group provided
   hosts: localhost
-  gather_facts: false
+  gather_facts: true
 
   collections:
     - oracle.oci
