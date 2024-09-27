@@ -100,4 +100,4 @@
     #   when: add_suppression
     - name: Check version of community.general
       ansible.builtin.debug:
-        msg: "community.general version {{ lookup('community.general.collection_version', 'oracle.oci') }}"
+        msg: "oracle.oci version {{ lookup('community.general.collection_version', 'oracle.oci') }}"
