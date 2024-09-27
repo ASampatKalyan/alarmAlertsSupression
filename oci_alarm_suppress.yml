@@ -31,18 +31,7 @@
       when: alarm_results | length > 0 and (("resourceDisplayName = \"" + instance_name + "\"") in result_item.query or instance_id in result_item.query)
       loop_control:
         loop_var: result_item
-
-    - name: Create alarm_suppression
-      oci_monitoring_alarm_suppression:
-        # required
-        alarm_suppression_target:
-          # required
-          target_type: ALARM
-          alarm_id: "ocid1.alarm.oc1..xxxxxxEXAMPLExxxxxx"
-        display_name: display_name_example
-        dimensions: null
-        time_suppress_from: time_suppress_from_example
-
+        
   rescue:
     - fail:
         msg: "{{ ansible_failed_task }} {{ ansible_failed_result }}"
