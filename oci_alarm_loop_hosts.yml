@@ -26,7 +26,7 @@
       set_fact:
         alarm_ids: []
 
-    - name: host inventory group loop for host {{ item }}
+    - name: host inventory group loop for host
       include_tasks: oci_alarm_suppress.yml
       vars:
         instance_name: "{{ hostvars[item].display_name }}"
