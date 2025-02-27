@@ -1,6 +1,10 @@
 - name: Alarm Suppress based on Host or group provided
   hosts: localhost
   gather_facts: true
+  vars:
+    start_time_main: "{{ start_time }}"
+    end_time_main: "{{ end_time }}"
+
 
   collections:
     - oracle.oci
@@ -27,6 +31,6 @@
         display_name: "display_name_example"
         dimensions:
           resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
-        time_suppress_from: "2025-02-28T01:00:00.000Z"
-        time_suppress_until: "2025-03-29T01:00:00.000Z"
+        time_suppress_from: "{{ start_time_main }}"
+        time_suppress_until: "{{ end_time_main }}"
 #        description: "garbage"
